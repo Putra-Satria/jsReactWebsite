@@ -1,0 +1,22 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+
+}
+
+.icon {
+  fill: hsl(hue, saturation, lightness);
+  transition: fill 0.4s ease;
+}
+
+.icon:hover {
+  fill: rgb(119, 114, 114);
+  cursor: pointer;
+}
+
+.select {
+  z-index: 10000
+}
