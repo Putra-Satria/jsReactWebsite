@@ -2,10 +2,15 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   font-family: "Poppins", sans-serif;
 
 }
+
+#root {
+  padding: 40px;
+}
+
 
 .icon {
   fill: hsl(hue, saturation, lightness);

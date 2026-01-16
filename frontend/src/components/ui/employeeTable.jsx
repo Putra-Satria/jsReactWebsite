@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react';
 import { For, HStack, Stack, Table } from "@chakra-ui/react"
 import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
@@ -6,8 +7,12 @@ import { useMutation } from '@tanstack/react-query';
 import { baseURL } from '../../../constants/global-variable';
 import { toast } from 'react-hot-toast';
 import { queryClient } from '../../../utils/queryClient';
+import InputEmployee from './inputEmployee';
+import { Dialog } from '@chakra-ui/react';
 
 const EmployeeTable = ({data}) => {
+  const [editingEmployee, setEditingEmployee] = useState(null)
+
   if(!data.length) {
     return <h1>You don't have any data in the Database</h1>
   }
@@ -37,6 +42,7 @@ const EmployeeTable = ({data}) => {
     }
   })
   return (
+    <>
     <Stack gap="10">
       <Table.Root size="md" variant="outline">
         <Table.Header>
@@ -63,15 +69,25 @@ const EmployeeTable = ({data}) => {
               <Table.Cell>
                 <HStack size="3">
                   <MdDeleteForever size={20} className='icon' onClick={() => mutation.mutate(item.id)}/>
-                  <FaEdit size={20} className='icon'/>
-                </HStack>
-                
-              </Table.Cell>      
+                  <FaEdit size={20} className='icon' onClick={() => setEditingEmployee(item)}/>
+                </HStack>                
+              </Table.Cell> 
+
             </Table.Row>
           ))}
         </Table.Body>
       </Table.Root>
     </Stack>
+
+    {editingEmployee && (
+        <InputEmployee
+          type="update"
+          data={editingEmployee}
+          open={true}
+          onClose={() => setEditingEmployee(null)}
+        />
+      )}
+    </>
   )
 }
 

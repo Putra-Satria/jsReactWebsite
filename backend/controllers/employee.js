@@ -44,13 +44,21 @@ export async function getSpecificEmployee(req, res, next) {
 export async function addEmployee(req, res, next) {
     try {
     const {Name, Email, Age, Salary, Roles} = req.body
-    if (!Name || !Email || !Age || !Salary) {
+    console.log('Received data:', {Name, Email, Age, Salary, Roles}); // Add this
+
+    if (Name == null || Email == null || Age == null || Salary == null || Roles == null) {
+        console.log('Missing fields detected'); // Debug
         return res.status(400).json({error: "There is missing fields!"})
     }
+    console.log('Executing query with:', [Name, Email, Age, Salary, Roles]);
+
     const data = await query(addEmployeeValueQuery, [Name, Email, Age, Salary, Roles])
+    console.log('Query result:', data.rows[0]);
     res.status(201).json(data.rows[0])
+
     } catch (error) {
-        console.log(error.message)
+        console.log("Error message: ", error.message)
+        console.log("Error stack:", error.stack);
         return next(errorMessages(400, error.messages))
     }
 
